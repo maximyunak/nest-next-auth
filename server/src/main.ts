@@ -14,7 +14,10 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 
 	const config = app.get(ConfigService)
-	const redis = new IORedis(config.getOrThrow('REDIS_URI'))
+	// const redis = new IORedis(config.getOrThrow('REDIS_URI'))
+	const redis = new IORedis('redis://localhost:6479')
+
+	console.log(config.getOrThrow('REDIS_URI'))
 
 	app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')))
 
