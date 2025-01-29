@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import RedisStore from 'connect-redis'
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session'
@@ -14,19 +15,29 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
 
 	const config = app.get(ConfigService)
+
+	const configSwagger = new DocumentBuilder()
+		.setTitle('Your API Title')
+		.setDescription('The API description')
+		.setVersion('1.0')
+		.addBearerAuth()
+		.build()
+
+	const document = SwaggerModule.createDocument(app, configSwagger)
+	SwaggerModule.setup('docs', app, document)
+
 	// const redis = new IORedis(config.getOrThrow('REDIS_URI'))
 	const redis = new IORedis('redis://localhost:6479')
 
-	console.log(config.getOrThrow('REDIS_URI'))
+	// console.log(config.getOrThrow('REDIS_URI'))
 
 	app.use(cookieParser(config.getOrThrow<string>('COOKIES_SECRET')))
 
-	app
-		.useGlobalPipes
-		// new ValidationPipe({
-		// 	transform: true
-		// })
-		()
+	app.useGlobalPipes(
+		new ValidationPipe({
+			transform: true
+		})
+	)
 
 	app.use(
 		session({
