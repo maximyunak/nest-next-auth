@@ -31,7 +31,7 @@ export class AuthController {
 		return this.authService.login(req, dto)
 	}
 
-	@Get('logout')
+	@Post('logout')
 	@HttpCode(HttpStatus.OK)
 	public async logout(
 		@Req() req: Request,
