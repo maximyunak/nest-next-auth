@@ -27,6 +27,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.0.3",
+    "@nestlab/google-recaptcha": "^3.9.0",
     "@prisma/client": "6.2.1",
     "argon2": "^0.41.1",
     "class-transformer": "^0.5.1",
