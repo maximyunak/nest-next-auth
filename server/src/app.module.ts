@@ -6,6 +6,7 @@ import { IS_DEV_ENV } from './libs/common/utils/is-dev.util'
 import { PrismaModule } from './prisma/prisma.module'
 import { PostController } from './test.controller'
 import { UserModule } from './user/user.module'
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
 	imports: [
@@ -15,7 +16,8 @@ import { UserModule } from './user/user.module'
 		}),
 		PrismaModule,
 		AuthModule,
-		UserModule
+		UserModule,
+		ProviderModule
 	],
 	controllers: [PostController]
 })
